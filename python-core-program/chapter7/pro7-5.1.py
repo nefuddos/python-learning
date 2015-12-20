@@ -1,4 +1,6 @@
+import time
 db = {}
+loginTime = {}
 def newuser():
 	prompt = 'login desired: '
 	while True:
@@ -10,13 +12,18 @@ def newuser():
 			break
 	pwd = raw_input('passwd: ')
 	db[name] = pwd
-
+	if (loginTime[name] == 'None') or (time.ctime() - loginTime[name]):
+		print 'You already logged in at:%s ' % loginTime[name]
+	loginTime[name] = time.ctime()
 def olduser():
 	name = raw_input('login: ')
 	pwd = raw_input('passwd: ')
 	passwd = db.get(name)
 	if passwd == pwd:
 		print 'welcome back', name
+		if (loginTime[name] == 'None') or (time.ctime() - loginTime[name]):
+			print 'You already logged in at:%s ' % loginTime[name]
+		loginTime[name] = time.ctime();
 	else:
 		print 'login incorrect'
 
